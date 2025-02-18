@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import atriz from '@/public/image-atriz.png'
+import { track } from '@vercel/analytics';
+
 
 // Dados do Quiz
 const questions = [
@@ -268,7 +270,10 @@ export default function Quiz() {
   const [showHistory, setShowHistory] = useState(false);
   const linkCheckout = 'https://pay.herospark.com/60-receitas-proteicas-aumente-sua-energia-e-ganhe-musculos-403068'
 
+
+
   const handleAnswer = () => {
+    track('option: '+ currentQuestion);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setProgress(progress + 10);
@@ -361,7 +366,10 @@ export default function Quiz() {
           <CTAButton
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => (window.location.href = linkCheckout)}
+            onClick={() => {
+              track('Visit', { productName: 'ebook checkout visit do mais sobre o ebook', price: 14.99 });
+              (window.location.href = linkCheckout)
+            }}
           >
             Quero meu ebook agora!
           </CTAButton>
@@ -392,7 +400,10 @@ export default function Quiz() {
             <CTAButton
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => (window.location.href = linkCheckout)}
+              onClick={() => {
+                track('Visit', { productName: 'ebook checkout visit do showresult', price: 14.99 });
+                (window.location.href = linkCheckout)
+              }}
             >
               Quero meu ebook agora!
             </CTAButton>
