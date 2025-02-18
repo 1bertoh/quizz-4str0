@@ -6,7 +6,6 @@ import styled from "styled-components";
 import atriz from '@/public/image-atriz.png'
 import { track } from '@vercel/analytics';
 
-
 // Dados do Quiz
 const questions = [
   {
@@ -270,10 +269,8 @@ export default function Quiz() {
   const [showHistory, setShowHistory] = useState(false);
   const linkCheckout = 'https://pay.herospark.com/60-receitas-proteicas-aumente-sua-energia-e-ganhe-musculos-403068'
 
-
-
   const handleAnswer = () => {
-    track('option: '+ currentQuestion);
+    track('option: ' + currentQuestion);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setProgress(progress + 10);
@@ -327,14 +324,17 @@ export default function Quiz() {
           transition={{ duration: 0.5 }}
         />
       </ProgressBar>
-  
+
       {!showResult && !isCalculating ? (
         <QuestionCard
-          className="shadow-xl"
+          className="shadow-xl relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <span className="absolute -top-3 -right-3 text-2xl hover:animate-bounce ">
+            🦋
+          </span>
           <h2 className="text-zinc-800 text-center text-xl font-bold">{questions[currentQuestion].question}</h2>
           {questions[currentQuestion].options.map((option, index) => (
             <OptionButton
@@ -351,51 +351,38 @@ export default function Quiz() {
           ))}
         </QuestionCard>
       ) : isCalculating ? (
-        <CalculatingScreen>
+        <CalculatingScreen className="relative">
+          <span className="absolute -top-3 -right-3 text-2xl">
+          💗
+          </span>
           <Spinner />
           <h2 className="text-zinc-800 text-center text-xl font-bold mt-4">Calculando suas respostas...</h2>
           <p className="text-zinc-600">Estamos analisando suas respostas para personalizar o ebook perfeito para você!</p>
         </CalculatingScreen>
       ) : showHistory ? (
-        <HistoryScreen>
-          <h2 className="text-zinc-800 text-center text-xl font-bold">Como surgiu esse ebook?</h2>
-          <ActressImage src={atriz.src} alt="Atriz de Hollywood" />
-          <HistoryText>
-            O e-book (livro digital) ficou famoso quando uma grande atriz de Hollywood apareceu magra em apenas um mês. Ela emagreceu para fazer um papel e revelou o segredo: um livro de receitas com 60 receitas prontas e que custam pouco. O livro original custa USD 100,00 (cem dólares), o equivalente a quase R$ 600,00. A Astro Fitness conseguiu acesso ao livro dela, traduzimos o conteúdo e estamos disponibilizando aqui no Brasil em português e 40x mais barato. Nós queremos que todos possam ter a oportunidade de ter uma vida saudável gastando pouco!
-          </HistoryText>
-          <CTAButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => {
-              track('Visit', { productName: 'ebook checkout visit do mais sobre o ebook', price: 14.99 });
-              (window.location.href = linkCheckout)
-            }}
-          >
-            Quero meu ebook agora!
-          </CTAButton>
-          <CTAButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setShowHistory(false)}
-            style={{ backgroundColor: "#4caf50", marginTop: "10px" }}
-          >
-            Voltar para o resultado
-          </CTAButton>
+        <HistoryScreen className="relative">
+          <span className="absolute -top-3 -right-3 text-4xl">
+            🦋
+          </span>
+          <SobreEBook linkCheckout={linkCheckout} setShowHistory={setShowHistory} />
         </HistoryScreen>
       ) : (
-        <ResultScreen>
-          <div className="text-zinc-600">
+        <ResultScreen className="relative">
+          <span className="absolute -top-3 -right-3 text-4xl">
+          🌸
+          </span>
+          <div className="text-zinc-600 relative">
             <h2 className="text-3xl">Parabéns! Você completou o quiz! 🎉</h2>
             <p>
               Com base nas suas respostas, o nosso ebook (livro digital) foi feito especialmente para você! Descubra o segredo das celebridades para <b>emagrecer rápido e ganhar músculos</b> com o nosso ebook exclusivo!
             </p>
             <br />
             <p className="font-bold underline">
-            <motion.span className=" pr-2 text-2xl inline-block"
-              animate={{ x: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }} // Loop infinito
+              <motion.span className=" pr-2 text-2xl inline-block"
+                animate={{ x: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }} // Loop infinito
               >👉 </motion.span>
-            60 Receitas Proteicas: Aumente Sua Energia e Ganhe Músculos!
+              60 Receitas Proteicas: Aumente Sua Energia e Ganhe Músculos!
             </p>
             <CTAButton
               whileHover={{ scale: 1.1 }}
@@ -420,4 +407,67 @@ export default function Quiz() {
       )}
     </Container>
   );
+}
+
+type TSobre = {
+  linkCheckout: string;
+  setShowHistory: Function;
+}
+
+const SobreEBook = (props: TSobre) => {
+  const { linkCheckout, setShowHistory } = props
+
+  return (
+    <div>
+      <h2 className="text-zinc-800 text-center text-xl font-bold">Como surgiu esse ebook?</h2>
+      <ActressImage src={atriz.src} alt="Atriz de Hollywood" />
+      <HistoryText>
+
+        O e-book que revolucionou a vida de uma das maiores atrizes de Hollywood agora está ao seu alcance! Em apenas um mês, ela alcançou uma incrível transformação física para um papel no cinema, e o segredo estava em um exclusivo livro digital com 60 receitas práticas, acessíveis e poderosas.
+      </HistoryText>
+      <HistoryText>
+        Originalmente vendido por <b>USD 100,00 (quase R$ 600,00)</b>, a Astro Fitness trouxe esse conteúdo para o Brasil, traduzido e adaptado, por um <b>preço 40 vezes mais acessível!</b> 
+      </HistoryText>
+      <HistoryText>
+        Agora, você também pode ter acesso a essas receitas testadas e aprovadas, que combinam nutrição balanceada, custo baixo e preparo rápido. Seja para emagrecer, ganhar músculos ou ter mais energia, este e-book é o seu guia para uma vida saudável sem complicações.
+      </HistoryText>
+      <h3 className="font-bold py-3 text-zinc-800">Por que esperar?</h3>
+      <ul className="text-zinc-800 space-y-3 list-disc list-inside">
+        <li className="flex items-start">
+          <span className="mr-2">✔️</span>
+          Receitas fáceis de seguir, mesmo para iniciantes.
+        </li>
+        <li className="flex items-start">
+          <span className="mr-2">✔️</span>
+          Ingredientes acessíveis que cabem no seu bolso.
+        </li>
+        <li className="flex items-start">
+          <span className="mr-2">✔️</span>
+          Resultados comprovados, inspirados em uma trajetória de sucesso.
+        </li>
+      </ul>
+      <br /><br />
+      <HistoryText>
+      Não perca a chance de transformar sua alimentação e sua vida.
+      </HistoryText>
+      <CTAButton
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => {
+          track('Visit', { productName: 'ebook checkout visit do mais sobre o ebook', price: 14.99 });
+          (window.location.href = linkCheckout)
+        }}
+      >
+        Quero meu ebook agora!
+      </CTAButton>
+      <CTAButton
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setShowHistory(false)}
+        style={{ backgroundColor: "#4caf50", marginTop: "10px" }}
+      >
+        Voltar para o resultado
+      </CTAButton>
+    </div>
+  )
 }
