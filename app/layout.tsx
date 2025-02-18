@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Humberto Port",
-  description: "This is my port, I hope you enjoy!!",
+  title: "Emagreça saudável",
+  description: "Descubra como as as celebridades emagrecem de forma rápida e saudável!!",
 };
 
 export default function RootLayout({
