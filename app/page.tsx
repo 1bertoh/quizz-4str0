@@ -285,14 +285,14 @@ export default function Quiz() {
   useEffect(() => {
     const els = document.getElementsByClassName("option-item");
 
-    const handleMouseEnter = (event) => {
+    const handleMouseEnter = (event: any) => {
       const span = event.currentTarget.querySelector("span");
       if (span) {
         span.classList.add("animate-spin");
       }
     };
 
-    const handleMouseLeave = (event) => {
+    const handleMouseLeave = (event: any) => {
       const span = event.currentTarget.querySelector("span");
       if (span) {
         span.classList.remove("animate-spin");
