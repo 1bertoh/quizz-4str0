@@ -267,7 +267,7 @@ export default function Quiz() {
   const [showResult, setShowResult] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
-  const linkCheckout = 'https://pay.herospark.com/60-receitas-proteicas-aumente-sua-energia-e-ganhe-musculos-403068'
+  const linkCheckout = 'https://pay.kiwify.com.br/oBJUYz5'
 
   const handleAnswer = () => {
     track('option: ' + currentQuestion);
